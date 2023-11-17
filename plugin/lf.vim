@@ -27,8 +27,8 @@ function! OpenLfIn(path, edit_cmd)
   let currentPath = shellescape(isdirectory(a:path) ? fnamemodify(expand(a:path), ":p:h") : expand(a:path))
   let s:edit_cmd = a:edit_cmd
   if exists(":FloatermNew")
-    exec 'FloatermNew' . ' --height=' . string(get(g:, 'lf_height', g:floaterm_height)) . 
-        \ ' --width=' . string(get(g:, 'lf_width', g:floaterm_width)) . 
+    exec 'FloatermNew' . ' --height=' . string(get(g:, 'lf_height', g:floaterm_height)) .
+        \ ' --width=' . string(get(g:, 'lf_width', g:floaterm_width)) .
         \ ' --title=lf --titleposition=center lf -- ' . currentPath
   else
     echoerr "Failed to open a floating terminal. Make sure `voldikss/vim-floaterm` is installed."
@@ -50,7 +50,7 @@ function! LfCallback(lf_tmpfile, lastdir_tmpfile, ...) abort
         call floaterm#window#hide(bufnr('%'))
       endif
       let locations = []
-      let floaterm_opener = edit_cmd != 'default' ? s:edit_cmd : g:floaterm_opener
+      let floaterm_opener = edit_cmd != 'default' ? s:edit_cmd : (b:floaterm_opener or g:floaterm_opener)
       for filename in filenames
         let dict = {'filename': fnamemodify(filename, ':p')}
         call add(locations, dict)
